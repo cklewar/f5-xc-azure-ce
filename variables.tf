@@ -36,11 +36,6 @@ variable "f5xc_api_token" {
   type = string
 }
 
-variable "f5xc_azure_cred" {
-  type    = string
-  default = "sun-az-creds"
-}
-
 variable "f5xc_azure_marketplace_agreement_publisher" {
   type    = string
   default = "volterraedgeservices"
