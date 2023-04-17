@@ -218,7 +218,7 @@ module "secure_ce" {
   f5xc_cluster_name   = format("%s-%s-%s", var.project_prefix, "azure-secure-ce", var.project_suffix)
   f5xc_azure_az_nodes = {
     node0 = {
-      f5xc_azure_vnet_slo_subnet = "192.168.0.0/24",
+      f5xc_azure_vnet_slo_subnet = "192.168.8.0/24",
       f5xc_azure_az              = "1"
     }
   }
@@ -236,7 +236,7 @@ module "secure_ce" {
   azurerm_instance_admin_username = "centos"
   owner_tag                       = "c.klewar@f5.com"
   is_sensitive                    = false
-  has_public_ip                   = true
+  has_public_ip                   = false
   ssh_public_key                  = file(var.ssh_public_key_file)
   providers                       = {
     volterra = volterra.default
