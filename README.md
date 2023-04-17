@@ -169,7 +169,7 @@ module "ce_single_node_multi_nic_existing_rg_existing_vnet" {
   f5xc_namespace      = var.f5xc_namespace
   f5xc_api_token      = var.f5xc_api_token
   f5xc_azure_region   = var.f5xc_azure_region
-  f5xc_cluster_name   = format("%s-%s-%s", var.project_prefix, "azure-ce", var.project_suffix)
+  f5xc_cluster_name   = format("%s-%s-%s", var.project_prefix, "azure-ce-exists-rg", var.project_suffix)
   f5xc_azure_az_nodes = {
     node0 = {
       f5xc_azure_vnet_slo_subnet = "192.168.0.0/26",
@@ -181,7 +181,7 @@ module "ce_single_node_multi_nic_existing_rg_existing_vnet" {
   f5xc_cluster_latitude                 = 50.110924
   f5xc_cluster_longitude                = 8.682127
   f5xc_existing_azure_resource_group    = azurerm_resource_group.f5xc_ce_single_node_multi_nic_existing_rg_existing_vnet.name
-  azurerm_existing_virtual_network_name = ""
+  azurerm_existing_virtual_network_name = azurerm_virtual_network.f5xc_ce_single_node_multi_nic_existing_rg_existing_vnet.name
   azurerm_client_id                     = var.azure_client_id
   azurerm_tenant_id                     = var.azure_tenant_id
   azurerm_client_secret                 = var.azure_client_secret
@@ -203,3 +203,48 @@ output "ce_single_node_multi_nic_existing_rg_existing_vnet" {
   value = module.ce.nodes
 }
 ````
+
+
+## Azure Cloud CE Single Node Multi NIC Secure Router module usage example
+
+```hcl
+module "secure_ce" {
+  source              = "./modules/f5xc/ce/azure"
+  f5xc_tenant         = var.f5xc_tenant
+  f5xc_api_url        = var.f5xc_api_url
+  f5xc_namespace      = var.f5xc_namespace
+  f5xc_api_token      = var.f5xc_api_token
+  f5xc_azure_region   = var.f5xc_azure_region
+  f5xc_cluster_name   = format("%s-%s-%s", var.project_prefix, "azure-secure-ce", var.project_suffix)
+  f5xc_azure_az_nodes = {
+    node0 = {
+      f5xc_azure_vnet_slo_subnet = "192.168.0.0/24",
+      f5xc_azure_az              = "1"
+    }
+  }
+  f5xc_cluster_labels             = { "ves.io/fleet" : format("%s-aws-secure-ce--%s", var.project_prefix, var.project_suffix) }
+  f5xc_ce_gateway_type            = var.f5xc_ce_gateway_type
+  f5xc_cluster_latitude           = 50.110924
+  f5xc_cluster_longitude          = 8.682127
+  f5xc_is_secure_cloud_ce         = true
+  azurerm_client_id               = var.azure_client_id
+  azurerm_tenant_id               = var.azure_tenant_id
+  azurerm_client_secret           = var.azure_client_secret
+  azurerm_subscription_id         = var.azure_subscription_id
+  azurerm_vnet_address_space      = ["192.168.8.0/21"]
+  azure_security_group_rules_slo  = []
+  azurerm_instance_admin_username = "centos"
+  owner_tag                       = "c.klewar@f5.com"
+  is_sensitive                    = false
+  has_public_ip                   = true
+  ssh_public_key                  = file(var.ssh_public_key_file)
+  providers                       = {
+    volterra = volterra.default
+    azurerm  = azurerm.default
+  }
+}
+
+output "secure_ce" {
+  value = module.secure_ce.nodes
+}
+```
