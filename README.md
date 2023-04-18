@@ -227,6 +227,7 @@ module "secure_ce" {
   f5xc_cluster_latitude           = 50.110924
   f5xc_cluster_longitude          = 8.682127
   f5xc_is_secure_cloud_ce         = true
+  f5xc_secure_cloud_ce_zones      = ["1"]
   azurerm_client_id               = var.azure_client_id
   azurerm_tenant_id               = var.azure_tenant_id
   azurerm_client_secret           = var.azure_client_secret
