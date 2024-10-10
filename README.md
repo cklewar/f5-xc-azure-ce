@@ -80,7 +80,7 @@ module "site" {
   azurerm_tenant_id               = var.azure_tenant_id
   azurerm_client_secret           = var.azure_client_secret
   azurerm_subscription_id         = var.azure_subscription_id
-  azurerm_instance_vm_size        = "80"
+  azurerm_instance_vm_size        = "Standard_D5_v2"
   azurerm_vnet_address_space = ["192.168.0.0/21"]
   azure_security_group_rules_slo = []
   azurerm_instance_admin_username = "cloud-user"
