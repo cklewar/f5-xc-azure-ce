@@ -1,13 +1,13 @@
 terraform {
   required_version = ">= 1.7.0"
-  cloud {
+  /*cloud {
     organization = "cklewar"
     hostname     = "app.terraform.io"
 
     workspaces {
       name = "f5-xc-azure-ce-module"
     }
-  }
+  }*/
 
   required_providers {
 
