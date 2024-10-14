@@ -65,7 +65,7 @@ variable "f5xc_ce_gateway_type" {
     condition     = contains(["ingress_egress_gateway", "ingress_gateway"], var.f5xc_ce_gateway_type)
     error_message = format("Valid values for gateway_type: ingress_egress_gateway, ingress_gateway")
   }
-  default = "ingress_gateway"
+  default = "ingress_egress_gateway"
 }
 
 variable "azure_client_id" {
